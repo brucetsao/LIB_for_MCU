@@ -1,0 +1,93 @@
+#######################################
+# Syntax Coloring Map For IRremote
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+decode_results	KEYWORD1
+IRrecv	KEYWORD1
+IRsend	KEYWORD1
+Ultrasonic	KEYWORD1
+DateTime	KEYWORD1
+RTC_DS1307	KEYWORD1
+RTC_Millis	KEYWORD1
+LiquidCrystal	KEYWORD1
+begin	KEYWORD2
+clear	KEYWORD2
+home	KEYWORD2
+print	KEYWORD2
+setCursor	KEYWORD2
+cursor	KEYWORD2
+noCursor	KEYWORD2
+blink	KEYWORD2
+noBlink	KEYWORD2
+display	KEYWORD2
+noDisplay	KEYWORD2
+autoscroll	KEYWORD2
+noAutoscroll	KEYWORD2
+leftToRight	KEYWORD2
+rightToLeft	KEYWORD2
+scrollDisplayLeft	KEYWORD2
+scrollDisplayRight	KEYWORD2
+createChar	KEYWORD2
+setBacklight	KEYWORD2
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+blink13	KEYWORD2
+decode	KEYWORD2
+enableIRIn	KEYWORD2
+resume	KEYWORD2
+enableIROut	KEYWORD2
+sendNEC	KEYWORD2
+sendSony	KEYWORD2
+sendSanyo KEYWORD2
+sendMitsubishi KEYWORD2
+sendRaw	KEYWORD2
+sendRC5	KEYWORD2
+sendRC6	KEYWORD2
+sendDISH KEYWORD2
+sendSharp KEYWORD2
+sendPanasonic KEYWORD2
+sendJVC KEYWORD2
+Timing	KEYWORD2
+Ranging	KEYWORD2
+
+year	KEYWORD2
+month	KEYWORD2
+day	KEYWORD2
+hour	KEYWORD2
+minute	KEYWORD2
+second	KEYWORD2
+dayOfWeek	KEYWORD2
+secondstime	KEYWORD2
+unixtime	KEYWORD2
+begin	KEYWORD2
+adjust	KEYWORD2
+isrunning	KEYWORD2
+now	KEYWORD2
+read 	KEYWORD2
+begin	KEYWORD2
+
+#
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+NEC	LITERAL1
+SONY	LITERAL1
+SANYO LITERAL1
+MITSUBISHI LITERAL1
+RC5	LITERAL1
+RC6	LITERAL1
+DISH LITERAL1
+SHARP LITERAL1
+PANASONIC LITERAL1
+JVC LITERAL1
+UNKNOWN	LITERAL1
+REPEAT	LITERAL1
+CM	LITERAL1	Constants
+INC	LITERAL1	Constants
