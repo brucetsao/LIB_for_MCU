@@ -196,7 +196,7 @@ void PCF8574::checkForInterrupt() {
 		_isrIgnore = 1;
 		
 	/* Re-enable interrupts to allow Wire library to work */
-//	sei();
+	sei();
 
 	/* Read current pins values */
 	readGPIO();

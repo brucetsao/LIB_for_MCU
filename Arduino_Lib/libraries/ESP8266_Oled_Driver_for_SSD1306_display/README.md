@@ -1,6 +1,8 @@
 esp8266-oled-ssd1306 [![Build Status](https://travis-ci.org/squix78/esp8266-oled-ssd1306.svg?branch=dev-branch-3.0.0)](https://travis-ci.org/squix78/esp8266-oled-ssd1306)
 ============
 
+> We just released version 3.0.0. Please have a look at our [upgrade guide](UPGRADE-3.0.md)
+
 This is a driver for the SSD1306 based 128x64 pixel OLED display running on the Arduino/ESP8266 platform.
 Can be used with either the I2C or SPI version of the display
 
@@ -59,6 +61,13 @@ The library supports different protocols to access the OLED display. Currently t
 
 SSD1306  display(ADDRESS, SDA, SDC);
 ```
+or for a SH1106:
+```C++
+#include <Wire.h>  
+#include "SH1106.h"
+
+SH1106  display(ADDRESS, SDA, SDC);
+```
 
 ### I2C with brzo_i2c
 
@@ -68,6 +77,14 @@ SSD1306  display(ADDRESS, SDA, SDC);
 
 SSD1306Brzo display(ADDRESS, SDA, SDC);
 ```
+or for the SH1106:
+```C++
+#include <brzo_i2c.h>
+#include "SH1106Brzo.h"
+
+SH1106Brzo display(ADDRESS, SDA, SDC);
+```
+
 ### SPI
 
 ```C++
@@ -75,6 +92,13 @@ SSD1306Brzo display(ADDRESS, SDA, SDC);
 #include "SSD1306Spi.h"
 
 SSD1306Spi display(RES, DC, CS);
+```
+or for the SH1106:
+```C++
+#include <SPI.h>
+#include "SH1106Spi.h"
+
+SH1106Spi display(RES, DC, CS);
 ```
 
 ## API
@@ -298,6 +322,17 @@ void runLoadingProcess(LoadingStage* stages, uint8_t stagesCount);
 // Manuell Controll
 void nextFrame();
 void previousFrame();
+
+/**
+ * Switch without transition to frame `frame`.
+ */
+void switchToFrame(uint8_t frame);
+
+/**
+ * Transition to frame `frame`, when the `frame` number is bigger than the current
+ * frame the forward animation will be used, otherwise the backwards animation is used.
+ */
+void transitionToFrame(uint8_t frame);
 
 // State Info
 OLEDDisplayUiState* getUiState();

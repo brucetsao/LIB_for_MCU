@@ -215,14 +215,18 @@ void OLEDDisplay::drawHorizontalLine(int16_t x, int16_t y, int16_t length) {
 }
 
 void OLEDDisplay::drawVerticalLine(int16_t x, int16_t y, int16_t length) {
-  if (y < 0 || y > DISPLAY_HEIGHT) return;
+  if (x < 0 || x > DISPLAY_WIDTH) return;
 
-  if (x < 0) {
-    length += x;
-    x = 0;
+  if (y < 0) {
+    length += y;
+    y = 0;
   }
 
-  if (length < 0) return;
+  if ( (y + length) > DISPLAY_HEIGHT) {
+    length = (DISPLAY_HEIGHT - y);
+  }
+
+  if (length <= 0) return;
 
 
   uint8_t yOffset = y & 7;
@@ -362,7 +366,7 @@ void OLEDDisplay::drawStringInternal(int16_t xMove, int16_t yMove, char* text, u
       byte currentCharWidth = pgm_read_byte( fontData + JUMPTABLE_START + charCode * JUMPTABLE_BYTES + JUMPTABLE_WIDTH); // Width
 
       // Test if the char is drawable
-      if (msbJumpToChar != 255 && lsbJumpToChar != 255) {
+      if (!(msbJumpToChar == 255 && lsbJumpToChar == 255)) {
         // Get the position of the char data
         uint16_t charDataPosition = JUMPTABLE_START + sizeOfJumpTable + ((msbJumpToChar << 8) + lsbJumpToChar);
         drawInternal(xPos, yPos, currentCharWidth, textHeight, fontData, charDataPosition, charByteSize);
@@ -427,11 +431,17 @@ void OLEDDisplay::drawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxL
     }
 
     if (strWidth >= maxLineWidth) {
-      preferredBreakpoint = preferredBreakpoint ? preferredBreakpoint : i;
-      widthAtBreakpoint = preferredBreakpoint ? widthAtBreakpoint : strWidth;
-
+      if (preferredBreakpoint == 0) {
+        preferredBreakpoint = i;
+        widthAtBreakpoint = strWidth;
+      }
       drawStringInternal(xMove, yMove + (lineNumber++) * lineHeight , &text[lastDrawnPos], preferredBreakpoint - lastDrawnPos, widthAtBreakpoint);
-      lastDrawnPos = preferredBreakpoint + 1; strWidth = 0; preferredBreakpoint = 0;
+      lastDrawnPos = preferredBreakpoint + 1;
+      // It is possible that we did not draw all letters to i so we need
+      // to account for the width of the chars from `i - preferredBreakpoint`
+      // by calculating the width we did not draw yet.
+      strWidth = strWidth - widthAtBreakpoint;
+      preferredBreakpoint = 0;
     }
   }
 

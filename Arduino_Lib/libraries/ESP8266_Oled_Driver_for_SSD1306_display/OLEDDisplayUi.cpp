@@ -150,6 +150,26 @@ void OLEDDisplayUi::previousFrame() {
   }
 }
 
+void OLEDDisplayUi::switchToFrame(uint8_t frame) {
+  if (frame >= this->frameCount) return;
+  this->state.ticksSinceLastStateSwitch = 0;
+  if (frame == this->state.currentFrame) return;
+  this->state.frameState = FIXED;
+  this->state.currentFrame = frame;
+  this->state.isIndicatorDrawen = true;
+}
+
+void OLEDDisplayUi::transitionToFrame(uint8_t frame) {
+  if (frame >= this->frameCount) return;
+  this->state.ticksSinceLastStateSwitch = 0;
+  if (frame == this->state.currentFrame) return;
+  this->nextFrameNumber = frame;
+  this->lastTransitionDirection = this->state.frameTransitionDirection;
+  this->state.manuelControll = true;
+  this->state.frameState = IN_TRANSITION;
+  this->state.frameTransitionDirection = frame < this->state.currentFrame ? -1 : 1;
+}
+
 
 // -/----- State information -----\-
 OLEDDisplayUiState* OLEDDisplayUi::getUiState(){
@@ -180,6 +200,7 @@ void OLEDDisplayUi::tick() {
           this->state.frameState = FIXED;
           this->state.currentFrame = getNextFrameNumber();
           this->state.ticksSinceLastStateSwitch = 0;
+          this->nextFrameNumber = -1;
         }
       break;
     case FIXED:
@@ -366,9 +387,6 @@ void OLEDDisplayUi::drawOverlays() {
 }
 
 uint8_t OLEDDisplayUi::getNextFrameNumber(){
-  int8_t nextFrame = (this->state.currentFrame + this->state.frameTransitionDirection) % this->frameCount;
-  if (nextFrame < 0){
-    nextFrame = this->frameCount + nextFrame;
-  }
-  return nextFrame;
+  if (this->nextFrameNumber != -1) return this->nextFrameNumber;
+  return (this->state.currentFrame + this->frameCount + this->state.frameTransitionDirection) % this->frameCount;
 }
