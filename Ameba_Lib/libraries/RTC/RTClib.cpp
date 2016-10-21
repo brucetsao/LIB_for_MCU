@@ -138,42 +138,42 @@ uint8_t RTC_DS1307::begin(void) {
 #if (ARDUINO >= 100)
 
 uint8_t RTC_DS1307::isrunning(void) {
-  Wire.beginTransmission(DS1307_ADDRESS);
-  Wire.write(i);	
-  Wire.endTransmission();
+  Wire1.beginTransmission(DS1307_ADDRESS);
+  Wire1.write(i);	
+  Wire1.endTransmission();
 
-  Wire.requestFrom(DS1307_ADDRESS, 1);
-  uint8_t ss = Wire.read();
+  Wire1.requestFrom(DS1307_ADDRESS, 1);
+  uint8_t ss = Wire1.read();
   return !(ss>>7);
 }
 
 void RTC_DS1307::adjust(const DateTime& dt) {
-    Wire.beginTransmission(DS1307_ADDRESS);
-    Wire.write(i);
-    Wire.write(bin2bcd(dt.second()));
-    Wire.write(bin2bcd(dt.minute()));
-    Wire.write(bin2bcd(dt.hour()));
-    Wire.write(bin2bcd(0));
-    Wire.write(bin2bcd(dt.day()));
-    Wire.write(bin2bcd(dt.month()));
-    Wire.write(bin2bcd(dt.year() - 2000));
-    Wire.write(i);
-    Wire.endTransmission();
+    Wire1.beginTransmission(DS1307_ADDRESS);
+    Wire1.write(i);
+    Wire1.write(bin2bcd(dt.second()));
+    Wire1.write(bin2bcd(dt.minute()));
+    Wire1.write(bin2bcd(dt.hour()));
+    Wire1.write(bin2bcd(0));
+    Wire1.write(bin2bcd(dt.day()));
+    Wire1.write(bin2bcd(dt.month()));
+    Wire1.write(bin2bcd(dt.year() - 2000));
+    Wire1.write(i);
+    Wire1.endTransmission();
 }
 
 DateTime RTC_DS1307::now() {
-  Wire.beginTransmission(DS1307_ADDRESS);
-  Wire.write(i);	
-  Wire.endTransmission();
+  Wire1.beginTransmission(DS1307_ADDRESS);
+  Wire1.write(i);	
+  Wire1.endTransmission();
   
-  Wire.requestFrom(DS1307_ADDRESS, 7);
-  uint8_t ss = bcd2bin(Wire.read() & 0x7F);
-  uint8_t mm = bcd2bin(Wire.read());
-  uint8_t hh = bcd2bin(Wire.read());
-  Wire.read();
-  uint8_t d = bcd2bin(Wire.read());
-  uint8_t m = bcd2bin(Wire.read());
-  uint16_t y = bcd2bin(Wire.read()) + 2000;
+  Wire1.requestFrom(DS1307_ADDRESS, 7);
+  uint8_t ss = bcd2bin(Wire1.read() & 0x7F);
+  uint8_t mm = bcd2bin(Wire1.read());
+  uint8_t hh = bcd2bin(Wire1.read());
+  Wire1.read();
+  uint8_t d = bcd2bin(Wire1.read());
+  uint8_t m = bcd2bin(Wire1.read());
+  uint16_t y = bcd2bin(Wire1.read()) + 2000;
   
   return DateTime (y, m, d, hh, mm, ss);
 }
@@ -181,42 +181,42 @@ DateTime RTC_DS1307::now() {
 #else
 
 uint8_t RTC_DS1307::isrunning(void) {
-  Wire.beginTransmission(DS1307_ADDRESS);
-  Wire.send(i);	
-  Wire.endTransmission();
+  Wire1.beginTransmission(DS1307_ADDRESS);
+  Wire1.send(i);	
+  Wire1.endTransmission();
 
-  Wire.requestFrom(DS1307_ADDRESS, 1);
-  uint8_t ss = Wire.receive();
+  Wire1.requestFrom(DS1307_ADDRESS, 1);
+  uint8_t ss = Wire1.receive();
   return !(ss>>7);
 }
 
 void RTC_DS1307::adjust(const DateTime& dt) {
-    Wire.beginTransmission(DS1307_ADDRESS);
-    Wire.send(i);
-    Wire.send(bin2bcd(dt.second()));
-    Wire.send(bin2bcd(dt.minute()));
-    Wire.send(bin2bcd(dt.hour()));
-    Wire.send(bin2bcd(0));
-    Wire.send(bin2bcd(dt.day()));
-    Wire.send(bin2bcd(dt.month()));
-    Wire.send(bin2bcd(dt.year() - 2000));
-    Wire.send(i);
-    Wire.endTransmission();
+    Wire1.beginTransmission(DS1307_ADDRESS);
+    Wire1.send(i);
+    Wire1.send(bin2bcd(dt.second()));
+    Wire1.send(bin2bcd(dt.minute()));
+    Wire1.send(bin2bcd(dt.hour()));
+    Wire1.send(bin2bcd(0));
+    Wire1.send(bin2bcd(dt.day()));
+    Wire1.send(bin2bcd(dt.month()));
+    Wire1.send(bin2bcd(dt.year() - 2000));
+    Wire1.send(i);
+    Wire1.endTransmission();
 }
 
 DateTime RTC_DS1307::now() {
-  Wire.beginTransmission(DS1307_ADDRESS);
-  Wire.send(i);	
-  Wire.endTransmission();
+  Wire1.beginTransmission(DS1307_ADDRESS);
+  Wire1.send(i);	
+  Wire1.endTransmission();
   
-  Wire.requestFrom(DS1307_ADDRESS, 7);
-  uint8_t ss = bcd2bin(Wire.receive() & 0x7F);
-  uint8_t mm = bcd2bin(Wire.receive());
-  uint8_t hh = bcd2bin(Wire.receive());
-  Wire.receive();
-  uint8_t d = bcd2bin(Wire.receive());
-  uint8_t m = bcd2bin(Wire.receive());
-  uint16_t y = bcd2bin(Wire.receive()) + 2000;
+  Wire1.requestFrom(DS1307_ADDRESS, 7);
+  uint8_t ss = bcd2bin(Wire1.receive() & 0x7F);
+  uint8_t mm = bcd2bin(Wire1.receive());
+  uint8_t hh = bcd2bin(Wire1.receive());
+  Wire1.receive();
+  uint8_t d = bcd2bin(Wire1.receive());
+  uint8_t m = bcd2bin(Wire1.receive());
+  uint16_t y = bcd2bin(Wire1.receive()) + 2000;
   
   return DateTime (y, m, d, hh, mm, ss);
 }
