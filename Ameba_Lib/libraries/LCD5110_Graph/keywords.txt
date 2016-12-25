@@ -2,6 +2,8 @@ LCD5110	KEYWORD1
 
 InitLCD	KEYWORD2
 setContrast	KEYWORD2
+enableSleep	KEYWORD2
+disableSleep	KEYWORD2
 update	KEYWORD2
 clrScr	KEYWORD2
 fillScr	KEYWORD2

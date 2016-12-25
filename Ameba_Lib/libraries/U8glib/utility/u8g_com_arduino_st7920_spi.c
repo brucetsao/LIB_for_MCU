@@ -58,10 +58,10 @@
 
 #if defined(__AVR__)
 
-static uint8_t u8g_bitData, u8g_bitNotData;
-static uint8_t u8g_bitClock, u8g_bitNotClock;
-static volatile uint8_t *u8g_outData;
-static volatile uint8_t *u8g_outClock;
+uint8_t u8g_bitData, u8g_bitNotData;
+uint8_t u8g_bitClock, u8g_bitNotClock;
+volatile uint8_t *u8g_outData;
+volatile uint8_t *u8g_outClock;
 
 static void u8g_com_arduino_init_shift_out(uint8_t dataPin, uint8_t clockPin)
 {
@@ -283,9 +283,6 @@ uint8_t u8g_com_arduino_st7920_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, 
         /* enable */
         //u8g_com_arduino_digital_write(u8g, U8G_PI_SCK, HIGH);
         u8g_com_arduino_digital_write(u8g, U8G_PI_CS, HIGH);
-	/* 28 Dec 2013 reassign pins, fixes issue with more than one display */
-	/* issue 227 */
-	u8g_com_arduino_init_shift_out(u8g->pin_list[U8G_PI_MOSI], u8g->pin_list[U8G_PI_SCK]);
       }
       break;
 

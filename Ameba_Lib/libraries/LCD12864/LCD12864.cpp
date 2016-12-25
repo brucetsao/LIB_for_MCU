@@ -12,9 +12,10 @@ between matter and waves, while at the same time half your electrons are entangl
 in some other point in space and time). 
 Other than that, enjoy... =D
 */
-#include "Arduino.h"
+
 #include "LCD12864.h"
 #include "LCDSprite.h"
+#include "Arduino.h"
 
 extern "C" {
 #include <wiring.h> 

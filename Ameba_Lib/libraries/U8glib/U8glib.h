@@ -1,11 +1,5 @@
 /*
 
-example code modify by Arthur
-
-www.kaise.com.tw
-www.buyic.com.tw
- 
- 
   U8glib.h
   
   C++ Interface
@@ -63,8 +57,10 @@ class U8GLIB : public Print
   protected:
     uint8_t init8BitFixedPort(u8g_dev_t *dev, uint8_t en, uint8_t cs, uint8_t di, uint8_t rw, uint8_t reset);
   private:
-    uint8_t init8Bit(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE);
-    uint8_t initRW8Bit(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t cs, uint8_t a0, uint8_t wr, uint8_t rd, uint8_t reset);
+    uint8_t init8Bit(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE);
+    uint8_t initRW8Bit(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+      uint8_t cs, uint8_t a0, uint8_t wr, uint8_t rd, uint8_t reset);
   public:
   
     /* constructor */
@@ -80,9 +76,11 @@ class U8GLIB : public Print
       { initHWSPI(dev, cs, a0, reset); }
     U8GLIB(u8g_dev_t *dev, uint8_t options) 
       { initI2C(dev, options); }
-    U8GLIB(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw, uint8_t reset) 
+    U8GLIB(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw, uint8_t reset) 
       { init8Bit(dev, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, cs2, di, rw, reset); }
-    U8GLIB(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t cs, uint8_t a0, uint8_t wr, uint8_t rd, uint8_t reset) 
+    U8GLIB(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t a0, uint8_t wr, uint8_t rd, uint8_t reset) 
       { initRW8Bit(dev, d0, d1, d2, d3, d4, d5, d6, d7, cs, a0, wr, rd, reset); }
 
     uint8_t begin(void) { is_begin = 1; return u8g_Begin(&u8g); }
@@ -149,11 +147,6 @@ class U8GLIB : public Print
      
     void drawEllipse(u8g_uint_t x0, u8g_uint_t y0, u8g_uint_t rx, u8g_uint_t ry, uint8_t opt = U8G_DRAW_ALL) { u8g_DrawEllipse(&u8g, x0, y0, rx, ry, opt); }
     void drawFilledEllipse(u8g_uint_t x0, u8g_uint_t y0, u8g_uint_t rx, u8g_uint_t ry, uint8_t opt = U8G_DRAW_ALL) { u8g_DrawFilledEllipse(&u8g, x0, y0, rx, ry, opt); }    
-
-    void drawTriangle(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) 
-      { u8g_DrawTriangle(&u8g, x0, y0, x1, y1, x2, y2); }
-      
-
     
     /* bitmap handling */
     void drawBitmap(u8g_uint_t x, u8g_uint_t y, u8g_uint_t cnt, u8g_uint_t h, const uint8_t *bitmap) 
@@ -229,20 +222,903 @@ class U8GLIB : public Print
 };
 
 
-
-
-class U8GLIB_KSM110_128X64_SPI : public U8GLIB 
+class U8GLIB_DOGS102 : public U8GLIB 
 {
   public:
-    U8GLIB_KSM110_128X64_SPI(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+    U8GLIB_DOGS102(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_dogs102_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGS102(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_dogs102_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_DOGS102_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGS102_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_dogs102_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGS102_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_dogs102_2x_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_MINI12864 : public U8GLIB 
+{
+  public:
+    U8GLIB_MINI12864(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_mini12864_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_MINI12864(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_mini12864_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_MINI12864_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_MINI12864_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_mini12864_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_MINI12864_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1701_mini12864_2x_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_DOGM132 : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGM132(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm132_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGM132(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm132_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_NHD_C12832 : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD_C12832(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12832_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD_C12832(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12832_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_NHD_C12832(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12832_parallel, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_NHD_C12832_USART : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD_C12832_USART(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12832_hw_usart_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_DOGM128 : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGM128(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm128_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGM128(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm128_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_DOGM128(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm128_parallel, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_DOGM128_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGM128_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm128_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGM128_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm128_2x_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_DOGM128_2X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_dogm128_2x_parallel, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_LM6059 : public U8GLIB 
+{
+  public:
+    U8GLIB_LM6059(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6059_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_LM6059(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6059_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_LM6059_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_LM6059_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6059_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_LM6059_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6059_2x_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_LM6063 : public U8GLIB 
+{
+  public:
+    U8GLIB_LM6063(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6063_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_LM6063(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6063_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_LM6063_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_LM6063_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6063_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_LM6063_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_lm6063_2x_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_64128N : public U8GLIB 
+{
+  public:
+    U8GLIB_64128N(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_64128n_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_64128N(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_64128n_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_64128N(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_64128n_parallel, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_64128N_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_64128N_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_64128n_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_64128N_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_64128n_2x_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_64128N_2X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_64128n_2x_parallel, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_NHD_C12864 : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD_C12864(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12864_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD_C12864(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12864_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_NHD_C12864_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD_C12864_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12864_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD_C12864_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7565_nhd_c12864_2x_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_UC1601_C128032 : public U8GLIB 
+{
+  public:
+    U8GLIB_UC1601_C128032(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1601_c128032_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_UC1601_C128032(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1601_c128032_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_UC1601_C128032_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_UC1601_C128032_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1601_c128032_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_UC1601_C128032_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1601_c128032_2x_hw_spi, cs, a0, reset)
+      { }
+};
+
+
+class U8GLIB_ST7920_128X64 : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_128X64(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_ST7920_128X64(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_ST7920_128X64(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, cs2, di, rw, reset)
+      { }
+    // U8GLIB_ST7920_128X64(uint8_t cs) 
+    //   : U8GLIB(&u8g_dev_st7920_128x64_sw_spi, cs, U8G_PIN_NONE, U8G_PIN_NONE)
+    //   { }
+};
+
+class U8GLIB_ST7920_128X64_1X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_128X64_1X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_sw_spi, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_128X64_1X(uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_hw_spi, cs, U8G_PIN_NONE, reset)			// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_128X64_1X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, U8G_PIN_NONE, U8G_PIN_NONE, di, rw, reset)  // cs1 = cs2 = U8G_PIN_NONE
+      { }
+};
+
+class U8GLIB_ST7920_128X64_CUSTOM_1X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_128X64_CUSTOM_1X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_custom, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+};
+
+class U8GLIB_ST7920_128X64_4X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_128X64_4X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_4x_sw_spi, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_128X64_4X(uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_4x_hw_spi, cs, U8G_PIN_NONE, reset)			// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_128X64_4X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_4x_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, U8G_PIN_NONE, U8G_PIN_NONE, di, rw, reset)   // cs1 = cs2 = U8G_PIN_NONE
+      { }
+};
+
+class U8GLIB_ST7920_128X64_CUSTOM_4X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_128X64_CUSTOM_4X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_128x64_4x_custom, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+};
+
+
+class U8GLIB_ST7920_192X32 : public U8GLIB  // OBSOLETE, use U8GLIB_ST7920_192X32_1X instead
+{ 
+  public:
+    U8GLIB_ST7920_192X32(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_ST7920_192X32(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_ST7920_192X32(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, cs2, di, rw, reset)
+      { }
+};
+
+class U8GLIB_ST7920_192X32_1X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_192X32_1X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_sw_spi, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_192X32_1X(uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_hw_spi, cs, U8G_PIN_NONE, reset)			// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_192X32_1X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, U8G_PIN_NONE, U8G_PIN_NONE, di, rw, reset)  // cs1 = cs2 = U8G_PIN_NONE
+      { }
+};
+
+class U8GLIB_ST7920_192X32_4X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_192X32_4X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_4x_sw_spi, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_192X32_4X(uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_4x_hw_spi, cs, U8G_PIN_NONE, reset)			// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_192X32_4X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_192x32_4x_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, U8G_PIN_NONE, U8G_PIN_NONE, di, rw, reset)   // cs1 = cs2 = U8G_PIN_NONE
+      { }
+};
+
+
+class U8GLIB_ST7920_202X32 : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_202X32(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_ST7920_202X32(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_ST7920_202X32(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, cs2, di, rw, reset)
+      { }
+};
+
+class U8GLIB_ST7920_202X32_1X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_202X32_1X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_sw_spi, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_202X32_1X(uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_hw_spi, cs, U8G_PIN_NONE, reset)			// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_202X32_1X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, U8G_PIN_NONE, U8G_PIN_NONE, di, rw, reset)  // cs1 = cs2 = U8G_PIN_NONE
+      { }
+};
+
+class U8GLIB_ST7920_202X32_4X : public U8GLIB 
+{
+  public:
+    U8GLIB_ST7920_202X32_4X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_4x_sw_spi, sck, mosi, cs, U8G_PIN_NONE, reset)		// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_202X32_4X(uint8_t cs, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_4x_hw_spi, cs, U8G_PIN_NONE, reset)			// a0 = U8G_PIN_NONE
+      { }
+    U8GLIB_ST7920_202X32_4X(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7920_202x32_4x_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, U8G_PIN_NONE, U8G_PIN_NONE, di, rw, reset)   // cs1 = cs2 = U8G_PIN_NONE
+      { }
+};
+
+
+class U8GLIB_LC7981_160X80 : public U8GLIB 
+{
+  public:
+    U8GLIB_LC7981_160X80(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_lc7981_160x80_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_LC7981_240X64 : public U8GLIB 
+{
+  public:
+    U8GLIB_LC7981_240X64(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_lc7981_240x64_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_LC7981_240X128 : public U8GLIB 
+{
+  public:
+    U8GLIB_LC7981_240X128(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_lc7981_240x128_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+// 16 bit mode required: Remove comment from "#define U8G_16BIT 1" in utility/u8g.h
+class U8GLIB_LC7981_320X64 : public U8GLIB 
+{
+  public:
+    U8GLIB_LC7981_320X64(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_lc7981_320x64_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+
+
+class U8GLIB_DOGXL160_BW : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGXL160_BW(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_bw_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGXL160_BW(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_bw_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_DOGXL160_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGXL160_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGXL160_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_gr_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_DOGXL160_2X_BW : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGXL160_2X_BW(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_2x_bw_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGXL160_2X_BW(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_2x_bw_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_DOGXL160_2X_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_DOGXL160_2X_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_2x_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_DOGXL160_2X_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_uc1610_dogxl160_2x_gr_hw_spi, cs, a0, reset)
+      { }
+};
+
+
+class U8GLIB_NHD27OLED_BW : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD27OLED_BW(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_bw_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD27OLED_BW(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_bw_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_NHD27OLED_BW(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_bw_parallel, d0, d1, d2, d3, d4, d5, d6, d7, U8G_PIN_NONE, cs, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_NHD27OLED_2X_BW : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD27OLED_2X_BW(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_2x_bw_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD27OLED_2X_BW(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_2x_bw_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_NHD27OLED_2X_BW(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_2x_bw_parallel, d0, d1, d2, d3, d4, d5, d6, d7, U8G_PIN_NONE, cs, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_NHD31OLED_BW : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD31OLED_BW(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_bw_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD31OLED_BW(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_bw_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_NHD31OLED_BW(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_bw_parallel, d0, d1, d2, d3, d4, d5, d6, d7, U8G_PIN_NONE, cs, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_NHD31OLED_2X_BW : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD31OLED_2X_BW(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_2x_bw_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD31OLED_2X_BW(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_2x_bw_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_NHD31OLED_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD31OLED_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD31OLED_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_gr_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_NHD31OLED_GR(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_gr_parallel, d0, d1, d2, d3, d4, d5, d6, d7, U8G_PIN_NONE, cs, U8G_PIN_NONE, di, rw, reset)
+      { }
+};
+
+class U8GLIB_NHD31OLED_2X_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD31OLED_2X_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_2x_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD31OLED_2X_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1322_nhd31oled_2x_gr_hw_spi, cs, a0, reset)
+      { }
+};
+
+
+class U8GLIB_SSD1306_128X64 : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1306_128X64(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
       : U8GLIB(&u8g_dev_ssd1306_128x64_sw_spi, sck, mosi, cs, a0, reset)
       { }
-    U8GLIB_KSM110_128X64_SPI(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+    U8GLIB_SSD1306_128X64(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
       : U8GLIB(&u8g_dev_ssd1306_128x64_hw_spi, cs, a0, reset)
       { }
-    U8GLIB_KSM110_128X64_SPI(uint8_t options = U8G_I2C_OPT_NONE) 
+    U8GLIB_SSD1306_128X64(uint8_t options = U8G_I2C_OPT_NONE) 
       : U8GLIB(&u8g_dev_ssd1306_128x64_i2c, options)
       { }
+};
+
+class U8GLIB_SSD1306_128X64_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1306_128X64_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x64_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1306_128X64_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x64_2x_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1306_128X64_2X(uint8_t options = U8G_I2C_OPT_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x64_2x_i2c, options)
+      { }
+};
+
+class U8GLIB_SSD1309_128X64 : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1309_128X64(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1309_128x64_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1309_128X64(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1309_128x64_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1309_128X64(uint8_t options = U8G_I2C_OPT_NONE) 
+      : U8GLIB(&u8g_dev_ssd1309_128x64_i2c, options)
+      { }
+};
+
+class U8GLIB_SSD1306_128X32 : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1306_128X32(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x32_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1306_128X32(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x32_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1306_128X32(uint8_t options = U8G_I2C_OPT_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x32_i2c, options)
+      { }
+};
+
+class U8GLIB_SSD1306_128X32_2X : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1306_128X32_2X(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x32_2x_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1306_128X32_2X(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x32_2x_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1306_128X32_2X(uint8_t options = U8G_I2C_OPT_NONE) 
+      : U8GLIB(&u8g_dev_ssd1306_128x32_2x_i2c, options)
+      { }
+};
+
+
+class U8GLIB_NHD27OLED_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD27OLED_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD27OLED_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_gr_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_NHD27OLED_2X_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_NHD27OLED_2X_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_2x_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_NHD27OLED_2X_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1325_nhd27oled_2x_gr_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1327_96X96_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1327_96X96_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1327_96x96_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1327_96X96_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1327_96x96_gr_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1327_96X96_GR(uint8_t options = U8G_I2C_OPT_NONE) 
+      : U8GLIB(&u8g_dev_ssd1327_96x96_gr_i2c, options)
+      { }
+};
+
+class U8GLIB_SSD1327_96X96_2X_GR : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1327_96X96_2X_GR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1327_96x96_2x_gr_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1327_96X96_2X_GR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1327_96x96_2x_gr_hw_spi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1327_96X96_2X_GR(uint8_t options = U8G_I2C_OPT_NONE) 
+      : U8GLIB(&u8g_dev_ssd1327_96x96_2x_gr_i2c, options)
+      { }
+};
+
+class U8GLIB_HT1632_24X16 : public U8GLIB 
+{
+  public:
+    U8GLIB_HT1632_24X16(uint8_t wr, uint8_t data, uint8_t cs) 
+      : U8GLIB(&u8g_dev_ht1632_24x16, wr, data, cs, U8G_PIN_NONE, U8G_PIN_NONE)
+      { }
+};
+
+
+
+class U8GLIB_PCF8812 : public U8GLIB 
+{
+  public:
+    U8GLIB_PCF8812(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_pcf8812_96x65_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_PCF8812(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_pcf8812_96x65_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_PCD8544 : public U8GLIB 
+{
+  public:
+    U8GLIB_PCD8544(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_pcd8544_84x48_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_PCD8544(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_pcd8544_84x48_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_TLS8204_84X48 : public U8GLIB 
+{
+  public:
+    U8GLIB_TLS8204_84X48(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_tls8204_84x48_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_KS0108_128 : public U8GLIB 
+{
+  public:
+    U8GLIB_KS0108_128(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ks0108_128x64_fast, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, cs2, di, rw, reset)
+      { }
+};
+
+class U8GLIB_SBN1661_122X32 : public U8GLIB 
+{
+  public:
+    U8GLIB_SBN1661_122X32(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_sbn1661_122x32, d0, d1, d2, d3, d4, d5, d6, d7, U8G_PIN_NONE, cs1, cs2, di, rw, reset)
+      { }
+};
+
+class U8GLIB_T6963_240X128 : public U8GLIB 
+{
+  public:
+    U8GLIB_T6963_240X128(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t a0, uint8_t wr, uint8_t rd, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_t6963_240x128_8bit, d0, d1, d2, d3, d4, d5, d6, d7, cs, a0, wr, rd, reset)
+      { }
+};
+
+class U8GLIB_T6963_240X64 : public U8GLIB 
+{
+  public:
+    U8GLIB_T6963_240X64(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t a0, uint8_t wr, uint8_t rd, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_t6963_240x64_8bit, d0, d1, d2, d3, d4, d5, d6, d7, cs, a0, wr, rd, reset)
+      { }
+};
+
+class U8GLIB_T6963_128X64 : public U8GLIB 
+{
+  public:
+    U8GLIB_T6963_128X64(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t cs, uint8_t a0, uint8_t wr, uint8_t rd, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_t6963_128x64_8bit, d0, d1, d2, d3, d4, d5, d6, d7, cs, a0, wr, rd, reset)
+      { }
+};
+
+
+class U8GLIB_ST7687_C144MVGD: public U8GLIB 
+{
+  public:
+    U8GLIB_ST7687_C144MVGD(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_st7687_c144mvgd_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_ST7687_C144MVGD(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs, uint8_t a0, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ks0108_128x64_fast, d0, d1, d2, d3, d4, d5, d6, d7, en, cs, U8G_PIN_NONE, a0, rw, reset)
+      { }
+};
+
+class U8GLIB_ILI9325D_320x240 : public U8GLIB 
+{
+  public:
+    /*
+    U8GLIB_ILI9325D_320x240(uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, 
+        uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ili9325d_320x240_8bit, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, U8G_PIN_NONE, di, rw, reset)
+      { }
+  */
+    U8GLIB_ILI9325D_320x240( uint8_t en, uint8_t cs1, uint8_t di, uint8_t rw = U8G_PIN_NONE, uint8_t reset = U8G_PIN_NONE) 
+      { init8BitFixedPort(&u8g_dev_ili9325d_320x240_8bit, en, cs1, di, rw, reset); }
+};
+
+
+
+class U8GLIB_SSD1351_128X128_332 : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128_332(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_332_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128_332(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_332_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128_4X_332 : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128_4X_332(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_4x_332_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128_4X_332(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_4x_332_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128GH_332 : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128GH_332(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_332_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128GH_332(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_332_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128GH_4X_332 : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128GH_4X_332(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_4x_332_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128GH_4X_332(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_4x_332_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128_IDX : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128_IDX(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_idx_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128_IDX(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_idx_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128_HICOLOR : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128_HICOLOR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_hicolor_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128_HICOLOR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_hicolor_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128_4X_HICOLOR : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128_4X_HICOLOR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_4x_hicolor_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128_4X_HICOLOR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128_4x_hicolor_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128GH_HICOLOR : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128GH_HICOLOR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_hicolor_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128GH_HICOLOR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_hicolor_hw_spi, cs, a0, reset)
+      { }
+};
+
+class U8GLIB_SSD1351_128X128GH_4X_HICOLOR : public U8GLIB 
+{
+  public:
+    U8GLIB_SSD1351_128X128GH_4X_HICOLOR(uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_4x_hicolor_sw_spi, sck, mosi, cs, a0, reset)
+      { }
+    U8GLIB_SSD1351_128X128GH_4X_HICOLOR(uint8_t cs, uint8_t a0, uint8_t reset = U8G_PIN_NONE) 
+      : U8GLIB(&u8g_dev_ssd1351_128x128gh_4x_hicolor_hw_spi, cs, a0, reset)
+      { }
+};
+
+
+class U8GLIB_FLIPDISC_2X7 : public U8GLIB 
+{
+  public:
+    U8GLIB_FLIPDISC_2X7(void) : U8GLIB(&u8g_dev_flipdisc_2x7)
+      {  }
+};
+
+class U8GLIB_VS : public U8GLIB 
+{
+  public:
+    U8GLIB_VS(void) : U8GLIB(&u8g_dev_vs)
+      {  }
 };
 
 

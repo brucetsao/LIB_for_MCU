@@ -1,5 +1,6 @@
-// LCD5110_TinyFont_View (C)2013 Henning Karlsen
-// web: http://www.henningkarlsen.com/electronics
+// LCD5110_TinyFont_View 
+// Copyright (C)2015 Rinky-Dink Electronics, Henning Karlsen. All right reserved
+// web: http://www.RinkyDinkElectronics.com/
 //
 // This program is a demo of the tiniest font.
 //

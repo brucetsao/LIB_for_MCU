@@ -11,4 +11,3 @@
 #define regtype volatile uint32_t
 #define regsize volatile uint16_t
 #define bitmapdatatype unsigned char*
-

@@ -1,5 +1,6 @@
-// LCD5110_Graph_Demo (C)2013 Henning Karlsen
-// web: http://www.henningkarlsen.com/electronics
+// LCD5110_Graph_Demo 
+// Copyright (C)2015 Rinky-Dink Electronics, Henning Karlsen. All right reserved
+// web: http://www.RinkyDinkElectronics.com/
 //
 // This program is a demo of most of the functions
 // in the library.
@@ -57,7 +58,7 @@ void loop()
     myGLCD.drawLine((i*3), 28-(i*2), 28, 28-(i*2));
   }
   myGLCD.setFont(TinyFont);
-  myGLCD.print("(C)2013 by", CENTER, 36);
+  myGLCD.print("(C)2015 by", CENTER, 36);
   myGLCD.print("Henning Karlsen", CENTER, 42);
   myGLCD.update();
   

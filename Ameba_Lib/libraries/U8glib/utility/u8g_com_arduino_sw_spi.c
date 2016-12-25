@@ -161,7 +161,7 @@ static void u8g_com_arduino_do_shift_out_msb_first(uint8_t val)
 
 /*=========================================================*/
 /* Arduino Due */
-#elif defined(__SAM3X8E__)
+#elif defined(__arm__)
 
 /* Due */
 
@@ -248,8 +248,6 @@ uint8_t u8g_com_arduino_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void
         /* enable */
         u8g_com_arduino_digital_write(u8g, U8G_PI_SCK, LOW);
         u8g_com_arduino_digital_write(u8g, U8G_PI_CS, LOW);
-	/* issue 227 */
-	u8g_com_arduino_init_shift_out(u8g->pin_list[U8G_PI_MOSI], u8g->pin_list[U8G_PI_SCK]);
       }
       break;
 

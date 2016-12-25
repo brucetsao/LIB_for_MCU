@@ -130,31 +130,6 @@ u8glib ChangeLog
   * Fixed compiler warning (issue 196)
   * Support for Freetronics SSD1351 OLED  (issue 195)
   * Several other fixes and improvements
-2014-01-25	v1.15	  Oliver Kraus <olikraus@gmail.com>
-  * Fixed a bug with the rotation procs:  Occupied too much flash ROM (issue 219)
-  * Fixed issue with more than one SPI controller (SW SPI, issue 227)
-  * Added "drawTriangle" (issue 226)
-  * Added support for UC1608 (issue 214)
-  * Added ProFont family of fonts (issue  234)
-  * SW SPI support for Teensy 3 (issue 230)
-  * Removed Arduino/AVR specific files from ARM port (issue 209)
-2014-07-05	v1.16	  Oliver Kraus <olikraus@gmail.com>
-  * Added support for LD7032 60x32 OLED
-  * Added support for SSD1306 OLED, which does not send I2C ACK (issue 239)
-  * Added support for SH1106 128x64 OLED
-  * Added support for T6963 128x128 displays
-  * Added U8GLIB_SSD1306_ADAFRUIT_128X64 constructor
-2014-12-21	v1.17	  Oliver Kraus <olikraus@gmail.com>
-  * Added U8GLIB_UC1611_DOGM240 constructor (Issue 284)
-  * Added U8GLIB_UC1611_DOGXL240 constructor
-  * Added support for UC1608 controller (Issue 300)
-  * Added U8GLIB_SSD1306_ADAFRUIT_128X64 for Adafruit OLEDs (Issue 289)
-  * Bufix in the sleep on/off sequence (CS has not been releases, issue 298)
-  * helvB and helvR number only fonts (Issue 271)
-  * 400KHz option for I2C with U8G_I2C_OPT_FAST available for Due and Uno (Issue 303)
-  * I2C support for Arduino Due. 100KHz/400KHz, TWI & TWI1, ACK will be ignored (issue 285)
-  * Unifont update (Issue 297)
-  
   
   
   

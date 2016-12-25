@@ -1,21 +1,24 @@
 /*
   LCD5110_Graph.h - Arduino/chipKit library support for Nokia 5110 compatible LCDs
-  Copyright (C)2013 Henning Karlsen. All right reserved
+  Copyright (C)2015 Rinky-Dink Electronics, Henning Karlsen. All right reserved
   
   Basic functionality of this library are based on the demo-code provided by
   ITead studio. You can find the latest version of the library at
-  http://www.henningkarlsen.com/electronics
+  http://www.RinkyDinkElectronics.com/
 
   This library has been made to make it easy to use the Nokia 5110 LCD module 
   as a graphics display on an Arduino or a chipKit.
 
-  If you make any modifications or improvements to the code, I would appreciate
-  that you share the code with me so that I might include it in the next release.
-  I can be contacted through http://www.henningkarlsen.com/electronics/contact.php
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the CC BY-NC-SA 3.0 license.
+  Please see the included documents for further information.
 
-  This library is licensed under a CC BY-NC-SA 3.0 (Creative Commons 
-  Attribution-NonCommercial-ShareAlike 3.0 Unported) License.
-  For more information see: http://creativecommons.org/licenses/by-nc-sa/3.0/
+  Commercial use of this library requires you to buy a license that
+  will allow commercial use. This includes using the library,
+  modified or not, as a tool to sell products.
+
+  The license applies to all part of the library including the 
+  examples and tools supplied with the library.
 */
 
 #ifndef LCD5110_Graph_h
@@ -79,6 +82,8 @@ class LCD5110
 		LCD5110(int SCK, int MOSI, int DC, int RST, int CS);
 		void InitLCD(int contrast=LCD_CONTRAST);
 		void setContrast(int contrast);
+		void enableSleep();
+		void disableSleep();
 		void update();
 		void clrScr();
 		void fillScr();
@@ -103,11 +108,13 @@ class LCD5110
 		void clrCircle(int x, int y, int radius);
 
 	protected:
-		regtype *P_SCK, *P_MOSI, *P_DC, *P_RST, *P_CS;
-		regsize B_SCK, B_MOSI, B_DC, B_RST, B_CS;
-		uint8_t SCK_Pin, RST_Pin;			// Needed for for faster MCUs
+		regtype			*P_SCK, *P_MOSI, *P_DC, *P_RST, *P_CS;
+		regsize			B_SCK, B_MOSI, B_DC, B_RST, B_CS;
+		uint8_t			SCK_Pin, RST_Pin;			// Needed for for faster MCUs
 		_current_font	cfont;
-		uint8_t	scrbuf[504];
+		uint8_t			scrbuf[504];
+		boolean			_sleep;
+		int				_contrast;
 
 		void _LCD_Write(unsigned char data, unsigned char mode);
 		void _print_char(unsigned char c, int x, int row);

@@ -135,8 +135,7 @@ uint8_t u8g_com_atmega_st7920_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val
       
       /* maybe set CPOL and CPHA to 1 */
       /* 20 Dez 2012: did set CPOL and CPHA to 1 in Arduino variant! */
-      /* 24 Jan 2014: implemented, see also issue 221 */
-      SPCR =  (1<<SPE) | (1<<MSTR)|(0<<SPR1)|(0<<SPR0)|(1<<CPOL)|(1<<CPHA);
+      SPCR =  (1<<SPE) | (1<<MSTR)|(0<<SPR1)|(0<<SPR0)|(0<<CPOL)|(0<<CPHA);
 #ifdef U8G_HW_SPI_2X
       SPSR = (1 << SPI2X);  /* double speed, issue 89 */
 #endif

@@ -1,21 +1,24 @@
 /*
   LCD5110_Graph.cpp - Arduino/chipKit library support for Nokia 5110 compatible LCDs
-  Copyright (C)2013 Henning Karlsen. All right reserved
+  Copyright (C)2015 Rinky-Dink Electronics, Henning Karlsen. All right reserved
   
   Basic functionality of this library are based on the demo-code provided by
   ITead studio. You can find the latest version of the library at
-  http://www.henningkarlsen.com/electronics
+  http://www.RinkyDinkElectronics.com/
 
   This library has been made to make it easy to use the Nokia 5110 LCD module 
   as a graphics display on an Arduino or a chipKit.
 
-  If you make any modifications or improvements to the code, I would appreciate
-  that you share the code with me so that I might include it in the next release.
-  I can be contacted through http://www.henningkarlsen.com/electronics/contact.php
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the CC BY-NC-SA 3.0 license.
+  Please see the included documents for further information.
 
-  This library is licensed under a CC BY-NC-SA 3.0 (Creative Commons 
-  Attribution-NonCommercial-ShareAlike 3.0 Unported) License.
-  For more information see: http://creativecommons.org/licenses/by-nc-sa/3.0/
+  Commercial use of this library requires you to buy a license that
+  will allow commercial use. This includes using the library,
+  modified or not, as a tool to sell products.
+
+  The license applies to all part of the library including the 
+  examples and tools supplied with the library.
 */
 
 #include "LCD5110_Graph.h"
@@ -94,6 +97,8 @@ void LCD5110::InitLCD(int contrast)
 	clrScr();
 	update();
 	cfont.font=0;
+	_sleep=false;
+	_contrast=contrast;
 }
 
 void LCD5110::setContrast(int contrast)
@@ -105,14 +110,40 @@ void LCD5110::setContrast(int contrast)
 	_LCD_Write(PCD8544_FUNCTIONSET | PCD8544_EXTENDEDINSTRUCTION, LCD_COMMAND);
 	_LCD_Write(PCD8544_SETVOP | contrast, LCD_COMMAND);
 	_LCD_Write(PCD8544_FUNCTIONSET, LCD_COMMAND);
+	_contrast=contrast;
+}
+
+void LCD5110::enableSleep()
+{
+	_sleep = true;
+	_LCD_Write(PCD8544_SETYADDR, LCD_COMMAND);
+	_LCD_Write(PCD8544_SETXADDR, LCD_COMMAND);
+	for (int b=0; b<504; b++)
+		_LCD_Write(0, LCD_DATA);
+	_LCD_Write(PCD8544_FUNCTIONSET | PCD8544_POWERDOWN, LCD_COMMAND);
+}
+
+void LCD5110::disableSleep()
+{
+	_sleep = false;
+	_LCD_Write(PCD8544_FUNCTIONSET | PCD8544_EXTENDEDINSTRUCTION, LCD_COMMAND);
+	_LCD_Write(PCD8544_SETVOP | _contrast, LCD_COMMAND);
+	_LCD_Write(PCD8544_SETTEMP | LCD_TEMP, LCD_COMMAND);
+	_LCD_Write(PCD8544_SETBIAS | LCD_BIAS, LCD_COMMAND);
+	_LCD_Write(PCD8544_FUNCTIONSET, LCD_COMMAND);
+	_LCD_Write(PCD8544_DISPLAYCONTROL | PCD8544_DISPLAYNORMAL, LCD_COMMAND);
+	update();
 }
 
 void LCD5110::update()
 {
-	_LCD_Write(PCD8544_SETYADDR, LCD_COMMAND);
-	_LCD_Write(PCD8544_SETXADDR, LCD_COMMAND);
-	for (int b=0; b<504; b++)
-		_LCD_Write(scrbuf[b], LCD_DATA);
+	if (_sleep==false)
+	{
+		_LCD_Write(PCD8544_SETYADDR, LCD_COMMAND);
+		_LCD_Write(PCD8544_SETXADDR, LCD_COMMAND);
+		for (int b=0; b<504; b++)
+			_LCD_Write(scrbuf[b], LCD_DATA);
+	}
 }
 
 void LCD5110::clrScr()
