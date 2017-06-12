@@ -10,7 +10,7 @@
  We have only a single MAX72XX.
  */
 LedControl lc=LedControl(12,11,10,1);
-
+// LedControl(int dataPin, int clkPin, int csPin, int numDevices)
 /* we always wait a bit between updates of the display */
 unsigned long delaytime=100;
 

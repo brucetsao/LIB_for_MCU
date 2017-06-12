@@ -9,7 +9,7 @@
  pin 10 is connected to LOAD 
  We have only a single MAX72XX.
  */
-LedControl lc=LedControl(12,11,10,1);
+LedControl lc=LedControl(12,11,10,4);
 
 /* we always wait a bit between updates of the display */
 unsigned long delaytime=100;

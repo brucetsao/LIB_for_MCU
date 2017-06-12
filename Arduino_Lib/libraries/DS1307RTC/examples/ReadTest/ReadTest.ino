@@ -1,6 +1,6 @@
-#include <Wire.h>
-#include <Time.h>
 #include <DS1307RTC.h>
+#include <Time.h>
+#include <Wire.h>
 
 void setup() {
   Serial.begin(9600);

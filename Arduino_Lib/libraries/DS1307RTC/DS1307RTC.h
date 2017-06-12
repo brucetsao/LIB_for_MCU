@@ -26,10 +26,6 @@ class DS1307RTC
     static uint8_t bcd2dec(uint8_t num);
 };
 
-#ifdef RTC
-#undef RTC // workaround for Arduino Due, which defines "RTC"...
-#endif
-
 extern DS1307RTC RTC;
 
 #endif
