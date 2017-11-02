@@ -1,0 +1,3 @@
+ModbusSlave485	KEYWORD1
+update	KEYWORD2
+configure	KEYWORD2

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Built-By: david
+Build-Jdk: 1.7.0_10
+Created-By: Apache Maven 3.2.3
+Main-Class: com.ardublock.Main
+Archiver-Version: Plexus Archiver
+

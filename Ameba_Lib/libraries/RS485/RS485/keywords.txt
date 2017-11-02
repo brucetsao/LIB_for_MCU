@@ -1,0 +1,17 @@
+RS485	KEYWORD1
+
+begin	KEYWORD2
+OFF	KEYWORD2
+read	KEYWORD2
+send	KEYWORD2
+parityBit	KEYWORD2
+stopBitConfig	KEYWORD2
+reset	KEYWORD2
+flush	KEYWORD2
+autoSleep	KEYWORD2
+forceSleep	KEYWORD2
+transmission	KEYWORD2
+reception	KEYWORD2
+baudRateConfig	KEYWORD2
+available	KEYWORD2
+
